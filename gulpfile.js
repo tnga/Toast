@@ -24,6 +24,7 @@ var gulp = require('gulp'),
     sourcemaps = require('gulp-sourcemaps'),
     ignore = require('gulp-ignore'),
     rename = require('gulp-rename') ,
+    notify = require("gulp-notify"),
     
     notifier = require('node-notifier') ;
 
@@ -31,8 +32,6 @@ var paths = {
     sassAll: 'scss/**/*.scss' ,
     sassMain: 'scss/grid.scss' ,
     sass: './scss' ,
-    bower: 'bower_components' ,
-    node: 'node_modules' ,
     dest: 'css'
 };
 
@@ -56,12 +55,10 @@ gulp.task('sass', function() {
         .pipe( rename({suffix: '.min'}))
         .pipe( cssnano())
         .pipe( sourcemaps.write( "."))
-        .pipe( gulp.dest(paths.dest)) ;
+        .pipe( gulp.dest(paths.dest))
+        .pipe( notify({ onLast: true, title: 'toast-sass:', message: 'css generation\'s / minification\'s task complete!' }));
     
     //del( [paths.sassMain]) ;
-    
-    notifier.notify({ title: 'toast-sass:', message: 'css generation\'s / minification\'s task complete!' }) ;
-
 });
 
 // library's builder task
